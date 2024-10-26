@@ -1,6 +1,9 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const handler = NextAuth({
     pages: {
@@ -19,8 +22,8 @@ const handler = NextAuth({
                 }
 
                 if (
-                    credentials.username === 'jonathan@admin' &&
-                    credentials.senha === 'machado'
+                    credentials.username === process.env.ADMIN_USERNAME &&
+                    credentials.senha === process.env.ADMIN_PASSWORD
                 ) {
                     return {
                         id: "1",
