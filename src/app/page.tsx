@@ -17,13 +17,19 @@ const Home: React.FC = () => {
     return (
         <>
            <div className='relative h-[400px] overflow-hidden'>
-            <div 
-                className='absolute top-1/2 left-1/2 w-full h-full bg-cover bg-center transition-transform duration-1000 ease-in-out transform -translate-x-1/2 -translate-y-1/2 hover:scale-105' 
-                style={{ backgroundImage: 'url(/banner.jpg)' }}
-            >
-                <div className='absolute top-0 left-0 w-full h-full bg-blue-200 opacity-50'></div>
-            </div>
-            </div>
+    <div 
+        className='absolute top-1/2 left-1/2 w-full h-full bg-cover bg-center transition-transform duration-1000 ease-in-out transform -translate-x-1/2 -translate-y-1/2 hover:scale-105' 
+        style={{ backgroundImage: 'url(/banner.jpg)' }}
+    >
+        <div className='absolute top-0 left-0 w-full h-full bg-blue-200 opacity-30'></div>
+        
+        {/* Texto sobre o banner */}
+        <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center'>
+            <h1 className='text-3xl font-bold text-[30px] text-[#FFFFFF] font-serif'>Fique Seguro: Orientações contra Golpes na Internet</h1>
+        </div>
+    </div>
+</div>
+
             <div className="flex flex-col container w-full ml-20 ">
                 <h1 className="text-[26px] font-bold my-6 mb-8 font-serif text-[#2b386a]">Cuidados a tomar</h1>
                 <div className="flex w-full flex-wrap justify-around">
