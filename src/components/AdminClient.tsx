@@ -20,7 +20,7 @@ export default function AdminClient() {
         createdAt: new Date(),
     });
     const [imagePreview, setImagePreview] = useState<string | null>(null);
-    const [editingCardId, setEditingCardId] = useState<number | null>(null); // ID do card em edição
+    const [editingCardId, setEditingCardId] = useState<number | null>(null); 
 
     const fetchCards = async () => {
         const response = await fetch("/api/card");
@@ -52,9 +52,7 @@ export default function AdminClient() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     
-        // Verifica se está no modo de edição
         if (editingCardId !== null) {
-            // Atualiza o card existente enviando o ID junto com os dados no body
             await fetch("/api/card", {
                 method: "PUT",
                 body: JSON.stringify({ ...formData, id: editingCardId }),
@@ -63,7 +61,6 @@ export default function AdminClient() {
                 },
             });
         } else {
-            // Cria um novo card
             await fetch("/api/card", {
                 method: "POST",
                 body: JSON.stringify(formData),
@@ -73,7 +70,6 @@ export default function AdminClient() {
             });
         }
     
-        // Limpa o formulário e atualiza a lista de cards
         setFormData({ titulo: "", imagem: "", texto: "", createdAt: new Date() });
         setImagePreview(null);
         setEditingCardId(null);
@@ -99,7 +95,7 @@ export default function AdminClient() {
             texto: card.texto,
             createdAt: card.createdAt,
         });
-        setImagePreview(card.imagem); // Pré-visualiza a imagem existente
+        setImagePreview(card.imagem);
     };
 
     const handleCancelEdit = () => {
@@ -172,19 +168,21 @@ export default function AdminClient() {
                 </div>
             </form>
 
-            <div className="flex w-full flex-wrap">
+            <div className="flex w-full flex-wrap justify-around">
                 {cards.length > 0 ? (
                     cards.map((card) => (
-                        <div key={card.id} className="flex w-[400px] flex-col rounded overflow-hidden m-4 mx-10">
-                            <Image 
-                                className="w-full" 
-                                src={card.imagem || "/fallback-image.jpg"} 
-                                alt={card.titulo}
-                                width={300}
-                                height={300}
-                            />
-                            <div className="px-6 py-4">
-                                <div className="font-bold text-xl mb-2">{card.titulo}</div>
+                        <div key={card.id} className="flex w-[400px] flex-col overflow-hidden m-4 mx-10">
+                            <div className="w-[500px] h-52 flex-shrink-0 ">
+                                <Image 
+                                    className="w-full h-full object-cover "
+                                    src={card.imagem || "/fallback-image.jpg"} 
+                                    alt={card.titulo}
+                                    width={500}
+                                    height={300}
+                                />      
+                            </div>
+                            <div className="py-4">
+                                <h1 className="font-bold text-xl mb-2">{card.titulo}</h1>
                                 <p className="text-gray-700 text-base">
                                     {card.texto.split('\n').map((line, index) => (
                                         <span key={index}>
@@ -193,9 +191,9 @@ export default function AdminClient() {
                                         </span>
                                     ))}
                                 </p>
-                                <div className="flex space-x-2">
-                                    <button onClick={() => handleEdit(card)} className="text-blue-500 hover:underline">Editar</button>
-                                    <button onClick={() => handleDelete(card.id)} className="text-red-500 hover:underline">Excluir</button>
+                                <div className="flex space-x-2 mt-4">
+                                    <button onClick={() => handleEdit(card)} className="w-[60px] bg-blue-300 text-blue-500 hover:underline rounded-[8px]">Editar</button>
+                                    <button onClick={() => handleDelete(card.id)} className="w-[60px] bg-red-300 text-red-500 hover:underline rounded-[8px]">Excluir</button>
                                 </div>
                             </div>
                         </div>

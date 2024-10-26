@@ -30,8 +30,8 @@ const Card: React.FC<CardProps> = ({ titulo, imagem, texto }) => {
                 />
             </div>
             <div className="py-2 px-6 flex flex-col w-full text-left ">
-                <h1 className="text-[32px] font-bold mb-4 leading-10">{titulo}</h1>
-                <p className="text-gray-700 text-base">{formatText(texto)}</p>
+                <h1 className="text-[32px] text-[#011ef8] font-serif  font-bold mb-4 leading-10">{titulo}</h1>
+                <p className="text-gray-700 font-sans text-base">{formatText(texto)}</p>
             </div>
         </div>
     );

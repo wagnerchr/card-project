@@ -10,7 +10,7 @@ export default async function Admin() {
 
     return (
         <div>
-            <h1 className="text-2xl font-bold my-4">Admin - Gerenciar Cards</h1>
+            <h1 className="text-2xl font-bold m-4 text-[#2b386a]">Admin - Gerenciar Postagens</h1>
             <AdminClient />
         </div>
     );

@@ -24,8 +24,8 @@ const Home: React.FC = () => {
                 <div className='absolute top-0 left-0 w-full h-full bg-blue-200 opacity-50'></div>
             </div>
             </div>
-            <div className="flex flex-col container w-full ml-6 ">
-                <h1 className="text-2xl font-bold my-4 font-white">Cuidados a tomar</h1>
+            <div className="flex flex-col container w-full ml-20 ">
+                <h1 className="text-[26px] font-bold my-6 mb-8 font-serif text-[#2b386a]">Cuidados a tomar</h1>
                 <div className="flex w-full flex-wrap justify-around">
                 {cards.length > 0 ? (
                     cards.map((card: CardProps, index: number) => (
@@ -37,8 +37,11 @@ const Home: React.FC = () => {
                         </div>
                     ))
                 ) : (
-                    <p className="text-gray-500">Nenhum card encontrado.</p>
+                    <p className="text-gray-500 mt-auto">Carregando postagens...</p>
                 )}
+            </div>
+            <div className='h-[100px]'>
+
             </div>
             </div>
         </>
