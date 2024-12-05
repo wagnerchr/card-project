@@ -20,12 +20,16 @@ export default function AdminClient() {
         createdAt: new Date(),
     });
     const [imagePreview, setImagePreview] = useState<string | null>(null);
-    const [editingCardId, setEditingCardId] = useState<number | null>(null); 
+    const [editingCardId, setEditingCardId] = useState<number | null>(null);
 
     const fetchCards = async () => {
-        const response = await fetch("/api/card");
-        const data = await response.json();
-        setCards(data.cards);
+        try {
+            const response = await fetch("/api/card");
+            const data = await response.json();
+            setCards(data.cards || []); // Garante que sempre haverá um array
+        } catch (error) {
+            console.error("Erro ao buscar cards:", error);
+        }
     };
 
     useEffect(() => {
@@ -51,40 +55,48 @@ export default function AdminClient() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-    
-        if (editingCardId !== null) {
-            await fetch("/api/card", {
-                method: "PUT",
-                body: JSON.stringify({ ...formData, id: editingCardId }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-        } else {
-            await fetch("/api/card", {
-                method: "POST",
-                body: JSON.stringify(formData),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+
+        try {
+            if (editingCardId !== null) {
+                await fetch("/api/card", {
+                    method: "PUT",
+                    body: JSON.stringify({ ...formData, id: editingCardId }),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+            } else {
+                await fetch("/api/card", {
+                    method: "POST",
+                    body: JSON.stringify(formData),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+            }
+
+            setFormData({ titulo: "", imagem: "", texto: "", createdAt: new Date() });
+            setImagePreview(null);
+            setEditingCardId(null);
+            fetchCards();
+        } catch (error) {
+            console.error("Erro ao salvar card:", error);
         }
-    
-        setFormData({ titulo: "", imagem: "", texto: "", createdAt: new Date() });
-        setImagePreview(null);
-        setEditingCardId(null);
-        fetchCards();
     };
 
     const handleDelete = async (id: number) => {
-        await fetch("/api/card", {
-            method: "DELETE",
-            body: JSON.stringify({ id }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        fetchCards();
+        try {
+            await fetch("/api/card", {
+                method: "DELETE",
+                body: JSON.stringify({ id }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            fetchCards();
+        } catch (error) {
+            console.error("Erro ao excluir card:", error);
+        }
     };
 
     const handleEdit = (card: CardProps) => {
@@ -169,17 +181,17 @@ export default function AdminClient() {
             </form>
 
             <div className="flex w-full flex-wrap justify-around">
-                {cards.length > 0 ? (
+                {cards?.length > 0 ? (
                     cards.map((card) => (
                         <div key={card.id} className="flex w-[400px] flex-col overflow-hidden m-4 mx-10">
-                            <div className="w-[500px] h-52 flex-shrink-0 ">
+                            <div className="w-[500px] h-52 flex-shrink-0">
                                 <Image 
-                                    className="w-full h-full object-cover "
+                                    className="w-full h-full object-cover"
                                     src={card.imagem || "/fallback-image.jpg"} 
                                     alt={card.titulo}
                                     width={500}
                                     height={300}
-                                />      
+                                />
                             </div>
                             <div className="py-4">
                                 <h1 className="font-bold text-xl mb-2">{card.titulo}</h1>

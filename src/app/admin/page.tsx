@@ -1,12 +1,12 @@
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
+// import { redirect } from "next/navigation";
+// import { getServerSession } from "next-auth";
 import AdminClient from "@/components/AdminClient";
 
 export default async function Admin() {
-    const session = await getServerSession();
-    if (!session) {
-        redirect("/admin/login");
-    }
+    // const session = await getServerSession();
+    // if (!session) {
+    //     redirect("/admin/login");
+    // }
 
     return (
         <div>
